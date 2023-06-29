@@ -1,0 +1,26 @@
+{
+    "protoc": {
+        "compile_on_save": false,
+        "options": [
+            "--proto_path=${workspaceFolder}"
+        ]
+    },
+    "clang-format.style": "{ IndentWidth: 4, BasedOnStyle: google, AlignConsecutiveAssignments: true, ColumnLimit: 120 }",
+    "cSpell.words": [
+        "extendee",
+        "hotstuff",
+        "Idxs",
+        "meling",
+        "oneof",
+        "Println",
+        "proto",
+        "protobuf",
+        "protoc",
+        "protoimpl",
+        "protopath",
+        "protorange",
+        "protoreflect",
+        "struct",
+        "testprotos"
+    ]
+}
