@@ -48,6 +48,24 @@ func GoStruct(m proto.Message) string {
 		}
 
 		switch v := last.Value.Interface().(type) {
+		case protoreflect.EnumNumber:
+			var fullName protoreflect.FullName
+			var enumName protoreflect.Name
+			if enumDesc := fd.Enum(); enumDesc != nil {
+				fullName = enumDesc.FullName()
+				enumValue := enumDesc.Values().ByNumber(v)
+				if enumValue != nil {
+					enumName = enumValue.Name()
+				}
+			}
+			if enumName != "" {
+				// enum fields are expressed as fullName_enumName in Go
+				builder.WriteString(fmt.Sprintf("%s_%s", fullName, enumName))
+			} else {
+				builder.WriteString(fmt.Sprintf("%d", v))
+			}
+			builder.WriteString(nestedFields.commaUnlessLast())
+
 		case protoreflect.Message:
 			if last.Step.Kind() == protopath.ListIndexStep || last.Step.Kind() == protopath.MapIndexStep {
 				builder.WriteString("{\n")

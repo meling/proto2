@@ -20,6 +20,58 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type MsgType int32
+
+const (
+	MsgType_PROPOSAL MsgType = 0
+	MsgType_VOTE     MsgType = 1
+	MsgType_NEWVIEW  MsgType = 2
+	MsgType_TIMEOUT  MsgType = 3
+)
+
+// Enum value maps for MsgType.
+var (
+	MsgType_name = map[int32]string{
+		0: "PROPOSAL",
+		1: "VOTE",
+		2: "NEWVIEW",
+		3: "TIMEOUT",
+	}
+	MsgType_value = map[string]int32{
+		"PROPOSAL": 0,
+		"VOTE":     1,
+		"NEWVIEW":  2,
+		"TIMEOUT":  3,
+	}
+)
+
+func (x MsgType) Enum() *MsgType {
+	p := new(MsgType)
+	*p = x
+	return p
+}
+
+func (x MsgType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (MsgType) Descriptor() protoreflect.EnumDescriptor {
+	return file_internal_testprotos_hotstuff_hotstuff_proto_enumTypes[0].Descriptor()
+}
+
+func (MsgType) Type() protoreflect.EnumType {
+	return &file_internal_testprotos_hotstuff_hotstuff_proto_enumTypes[0]
+}
+
+func (x MsgType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use MsgType.Descriptor instead.
+func (MsgType) EnumDescriptor() ([]byte, []int) {
+	return file_internal_testprotos_hotstuff_hotstuff_proto_rawDescGZIP(), []int{0}
+}
+
 type Proposal struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -945,6 +997,77 @@ func (x *AggQC) GetView() uint64 {
 	return 0
 }
 
+type MsgInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Type   MsgType `protobuf:"varint,1,opt,name=Type,proto3,enum=hotstuff.MsgType" json:"Type,omitempty"`
+	Height uint32  `protobuf:"varint,2,opt,name=Height,proto3" json:"Height,omitempty"`
+	Round  uint32  `protobuf:"varint,3,opt,name=Round,proto3" json:"Round,omitempty"`
+	Step   uint32  `protobuf:"varint,4,opt,name=Step,proto3" json:"Step,omitempty"`
+}
+
+func (x *MsgInfo) Reset() {
+	*x = MsgInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_internal_testprotos_hotstuff_hotstuff_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MsgInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MsgInfo) ProtoMessage() {}
+
+func (x *MsgInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_testprotos_hotstuff_hotstuff_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MsgInfo.ProtoReflect.Descriptor instead.
+func (*MsgInfo) Descriptor() ([]byte, []int) {
+	return file_internal_testprotos_hotstuff_hotstuff_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *MsgInfo) GetType() MsgType {
+	if x != nil {
+		return x.Type
+	}
+	return MsgType_PROPOSAL
+}
+
+func (x *MsgInfo) GetHeight() uint32 {
+	if x != nil {
+		return x.Height
+	}
+	return 0
+}
+
+func (x *MsgInfo) GetRound() uint32 {
+	if x != nil {
+		return x.Round
+	}
+	return 0
+}
+
+func (x *MsgInfo) GetStep() uint32 {
+	if x != nil {
+		return x.Step
+	}
+	return 0
+}
+
 var File_internal_testprotos_hotstuff_hotstuff_proto protoreflect.FileDescriptor
 
 var file_internal_testprotos_hotstuff_hotstuff_proto_rawDesc = []byte{
@@ -1054,11 +1177,22 @@ var file_internal_testprotos_hotstuff_hotstuff_proto_rawDesc = []byte{
 	0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x2a,
 	0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x14, 0x2e,
 	0x68, 0x6f, 0x74, 0x73, 0x74, 0x75, 0x66, 0x66, 0x2e, 0x51, 0x75, 0x6f, 0x72, 0x75, 0x6d, 0x43,
-	0x65, 0x72, 0x74, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x42, 0x37,
-	0x5a, 0x35, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x6d, 0x65, 0x6c,
-	0x69, 0x6e, 0x67, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x32, 0x2f, 0x69, 0x6e, 0x74, 0x65, 0x72,
-	0x6e, 0x61, 0x6c, 0x2f, 0x74, 0x65, 0x73, 0x74, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x73, 0x2f, 0x68,
-	0x6f, 0x74, 0x73, 0x74, 0x75, 0x66, 0x66, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x72, 0x74, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x72,
+	0x0a, 0x07, 0x4d, 0x73, 0x67, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x25, 0x0a, 0x04, 0x54, 0x79, 0x70,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x11, 0x2e, 0x68, 0x6f, 0x74, 0x73, 0x74, 0x75,
+	0x66, 0x66, 0x2e, 0x4d, 0x73, 0x67, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x54, 0x79, 0x70, 0x65,
+	0x12, 0x16, 0x0a, 0x06, 0x48, 0x65, 0x69, 0x67, 0x68, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d,
+	0x52, 0x06, 0x48, 0x65, 0x69, 0x67, 0x68, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x52, 0x6f, 0x75, 0x6e,
+	0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x05, 0x52, 0x6f, 0x75, 0x6e, 0x64, 0x12, 0x12,
+	0x0a, 0x04, 0x53, 0x74, 0x65, 0x70, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x04, 0x53, 0x74,
+	0x65, 0x70, 0x2a, 0x3b, 0x0a, 0x07, 0x4d, 0x73, 0x67, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0c, 0x0a,
+	0x08, 0x50, 0x52, 0x4f, 0x50, 0x4f, 0x53, 0x41, 0x4c, 0x10, 0x00, 0x12, 0x08, 0x0a, 0x04, 0x56,
+	0x4f, 0x54, 0x45, 0x10, 0x01, 0x12, 0x0b, 0x0a, 0x07, 0x4e, 0x45, 0x57, 0x56, 0x49, 0x45, 0x57,
+	0x10, 0x02, 0x12, 0x0b, 0x0a, 0x07, 0x54, 0x49, 0x4d, 0x45, 0x4f, 0x55, 0x54, 0x10, 0x03, 0x42,
+	0x37, 0x5a, 0x35, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x6d, 0x65,
+	0x6c, 0x69, 0x6e, 0x67, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x32, 0x2f, 0x69, 0x6e, 0x74, 0x65,
+	0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x74, 0x65, 0x73, 0x74, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x73, 0x2f,
+	0x68, 0x6f, 0x74, 0x73, 0x74, 0x75, 0x66, 0x66, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1073,51 +1207,55 @@ func file_internal_testprotos_hotstuff_hotstuff_proto_rawDescGZIP() []byte {
 	return file_internal_testprotos_hotstuff_hotstuff_proto_rawDescData
 }
 
-var file_internal_testprotos_hotstuff_hotstuff_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_internal_testprotos_hotstuff_hotstuff_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_internal_testprotos_hotstuff_hotstuff_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_internal_testprotos_hotstuff_hotstuff_proto_goTypes = []interface{}{
-	(*Proposal)(nil),                // 0: hotstuff.Proposal
-	(*BlockHash)(nil),               // 1: hotstuff.BlockHash
-	(*Block)(nil),                   // 2: hotstuff.Block
-	(*ECDSASignature)(nil),          // 3: hotstuff.ECDSASignature
-	(*BLS12Signature)(nil),          // 4: hotstuff.BLS12Signature
-	(*Signature)(nil),               // 5: hotstuff.Signature
-	(*PartialCert)(nil),             // 6: hotstuff.PartialCert
-	(*ECDSAMultiSignature)(nil),     // 7: hotstuff.ECDSAMultiSignature
-	(*BLS12AggregateSignature)(nil), // 8: hotstuff.BLS12AggregateSignature
-	(*QuorumSignature)(nil),         // 9: hotstuff.QuorumSignature
-	(*QuorumCert)(nil),              // 10: hotstuff.QuorumCert
-	(*TimeoutCert)(nil),             // 11: hotstuff.TimeoutCert
-	(*TimeoutMsg)(nil),              // 12: hotstuff.TimeoutMsg
-	(*SyncInfo)(nil),                // 13: hotstuff.SyncInfo
-	(*AggQC)(nil),                   // 14: hotstuff.AggQC
-	nil,                             // 15: hotstuff.AggQC.QCsEntry
+	(MsgType)(0),                    // 0: hotstuff.MsgType
+	(*Proposal)(nil),                // 1: hotstuff.Proposal
+	(*BlockHash)(nil),               // 2: hotstuff.BlockHash
+	(*Block)(nil),                   // 3: hotstuff.Block
+	(*ECDSASignature)(nil),          // 4: hotstuff.ECDSASignature
+	(*BLS12Signature)(nil),          // 5: hotstuff.BLS12Signature
+	(*Signature)(nil),               // 6: hotstuff.Signature
+	(*PartialCert)(nil),             // 7: hotstuff.PartialCert
+	(*ECDSAMultiSignature)(nil),     // 8: hotstuff.ECDSAMultiSignature
+	(*BLS12AggregateSignature)(nil), // 9: hotstuff.BLS12AggregateSignature
+	(*QuorumSignature)(nil),         // 10: hotstuff.QuorumSignature
+	(*QuorumCert)(nil),              // 11: hotstuff.QuorumCert
+	(*TimeoutCert)(nil),             // 12: hotstuff.TimeoutCert
+	(*TimeoutMsg)(nil),              // 13: hotstuff.TimeoutMsg
+	(*SyncInfo)(nil),                // 14: hotstuff.SyncInfo
+	(*AggQC)(nil),                   // 15: hotstuff.AggQC
+	(*MsgInfo)(nil),                 // 16: hotstuff.MsgInfo
+	nil,                             // 17: hotstuff.AggQC.QCsEntry
 }
 var file_internal_testprotos_hotstuff_hotstuff_proto_depIdxs = []int32{
-	2,  // 0: hotstuff.Proposal.Block:type_name -> hotstuff.Block
-	14, // 1: hotstuff.Proposal.AggQC:type_name -> hotstuff.AggQC
-	10, // 2: hotstuff.Block.QC:type_name -> hotstuff.QuorumCert
-	3,  // 3: hotstuff.Signature.ECDSASig:type_name -> hotstuff.ECDSASignature
-	4,  // 4: hotstuff.Signature.BLS12Sig:type_name -> hotstuff.BLS12Signature
-	9,  // 5: hotstuff.PartialCert.Sig:type_name -> hotstuff.QuorumSignature
-	3,  // 6: hotstuff.ECDSAMultiSignature.Sigs:type_name -> hotstuff.ECDSASignature
-	7,  // 7: hotstuff.QuorumSignature.ECDSASigs:type_name -> hotstuff.ECDSAMultiSignature
-	8,  // 8: hotstuff.QuorumSignature.BLS12Sig:type_name -> hotstuff.BLS12AggregateSignature
-	9,  // 9: hotstuff.QuorumCert.Sig:type_name -> hotstuff.QuorumSignature
-	9,  // 10: hotstuff.TimeoutCert.Sig:type_name -> hotstuff.QuorumSignature
-	13, // 11: hotstuff.TimeoutMsg.SyncInfo:type_name -> hotstuff.SyncInfo
-	9,  // 12: hotstuff.TimeoutMsg.ViewSig:type_name -> hotstuff.QuorumSignature
-	9,  // 13: hotstuff.TimeoutMsg.MsgSig:type_name -> hotstuff.QuorumSignature
-	10, // 14: hotstuff.SyncInfo.QC:type_name -> hotstuff.QuorumCert
-	11, // 15: hotstuff.SyncInfo.TC:type_name -> hotstuff.TimeoutCert
-	14, // 16: hotstuff.SyncInfo.AggQC:type_name -> hotstuff.AggQC
-	15, // 17: hotstuff.AggQC.QCs:type_name -> hotstuff.AggQC.QCsEntry
-	9,  // 18: hotstuff.AggQC.Sig:type_name -> hotstuff.QuorumSignature
-	10, // 19: hotstuff.AggQC.QCsEntry.value:type_name -> hotstuff.QuorumCert
-	20, // [20:20] is the sub-list for method output_type
-	20, // [20:20] is the sub-list for method input_type
-	20, // [20:20] is the sub-list for extension type_name
-	20, // [20:20] is the sub-list for extension extendee
-	0,  // [0:20] is the sub-list for field type_name
+	3,  // 0: hotstuff.Proposal.Block:type_name -> hotstuff.Block
+	15, // 1: hotstuff.Proposal.AggQC:type_name -> hotstuff.AggQC
+	11, // 2: hotstuff.Block.QC:type_name -> hotstuff.QuorumCert
+	4,  // 3: hotstuff.Signature.ECDSASig:type_name -> hotstuff.ECDSASignature
+	5,  // 4: hotstuff.Signature.BLS12Sig:type_name -> hotstuff.BLS12Signature
+	10, // 5: hotstuff.PartialCert.Sig:type_name -> hotstuff.QuorumSignature
+	4,  // 6: hotstuff.ECDSAMultiSignature.Sigs:type_name -> hotstuff.ECDSASignature
+	8,  // 7: hotstuff.QuorumSignature.ECDSASigs:type_name -> hotstuff.ECDSAMultiSignature
+	9,  // 8: hotstuff.QuorumSignature.BLS12Sig:type_name -> hotstuff.BLS12AggregateSignature
+	10, // 9: hotstuff.QuorumCert.Sig:type_name -> hotstuff.QuorumSignature
+	10, // 10: hotstuff.TimeoutCert.Sig:type_name -> hotstuff.QuorumSignature
+	14, // 11: hotstuff.TimeoutMsg.SyncInfo:type_name -> hotstuff.SyncInfo
+	10, // 12: hotstuff.TimeoutMsg.ViewSig:type_name -> hotstuff.QuorumSignature
+	10, // 13: hotstuff.TimeoutMsg.MsgSig:type_name -> hotstuff.QuorumSignature
+	11, // 14: hotstuff.SyncInfo.QC:type_name -> hotstuff.QuorumCert
+	12, // 15: hotstuff.SyncInfo.TC:type_name -> hotstuff.TimeoutCert
+	15, // 16: hotstuff.SyncInfo.AggQC:type_name -> hotstuff.AggQC
+	17, // 17: hotstuff.AggQC.QCs:type_name -> hotstuff.AggQC.QCsEntry
+	10, // 18: hotstuff.AggQC.Sig:type_name -> hotstuff.QuorumSignature
+	0,  // 19: hotstuff.MsgInfo.Type:type_name -> hotstuff.MsgType
+	11, // 20: hotstuff.AggQC.QCsEntry.value:type_name -> hotstuff.QuorumCert
+	21, // [21:21] is the sub-list for method output_type
+	21, // [21:21] is the sub-list for method input_type
+	21, // [21:21] is the sub-list for extension type_name
+	21, // [21:21] is the sub-list for extension extendee
+	0,  // [0:21] is the sub-list for field type_name
 }
 
 func init() { file_internal_testprotos_hotstuff_hotstuff_proto_init() }
@@ -1306,6 +1444,18 @@ func file_internal_testprotos_hotstuff_hotstuff_proto_init() {
 				return nil
 			}
 		}
+		file_internal_testprotos_hotstuff_hotstuff_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*MsgInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	file_internal_testprotos_hotstuff_hotstuff_proto_msgTypes[0].OneofWrappers = []interface{}{}
 	file_internal_testprotos_hotstuff_hotstuff_proto_msgTypes[5].OneofWrappers = []interface{}{
@@ -1323,13 +1473,14 @@ func file_internal_testprotos_hotstuff_hotstuff_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_internal_testprotos_hotstuff_hotstuff_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   16,
+			NumEnums:      1,
+			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_internal_testprotos_hotstuff_hotstuff_proto_goTypes,
 		DependencyIndexes: file_internal_testprotos_hotstuff_hotstuff_proto_depIdxs,
+		EnumInfos:         file_internal_testprotos_hotstuff_hotstuff_proto_enumTypes,
 		MessageInfos:      file_internal_testprotos_hotstuff_hotstuff_proto_msgTypes,
 	}.Build()
 	File_internal_testprotos_hotstuff_hotstuff_proto = out.File

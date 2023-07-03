@@ -88,3 +88,17 @@ message AggQC {
     QuorumSignature Sig         = 2;
     uint64 View                 = 3;
 }
+
+enum MsgType {
+    PROPOSAL = 0;
+    VOTE     = 1;
+    NEWVIEW  = 2;
+    TIMEOUT  = 3;
+}
+
+message MsgInfo {
+    MsgType Type  = 1;
+    uint32 Height = 2;
+    uint32 Round  = 3;
+    uint32 Step   = 4;
+}

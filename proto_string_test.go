@@ -169,6 +169,33 @@ func TestGoStruct(t *testing.T) {
 				},
 			}`,
 		},
+		{
+			input: &hotstuff.MsgInfo{
+				Type:   hotstuff.MsgType_NEWVIEW,
+				Height: 1,
+				Round:  2,
+				Step:   4,
+			},
+			want: `&hotstuff.MsgInfo{
+				Type:   hotstuff.MsgType_NEWVIEW,
+				Height: 1,
+				Round:  2,
+				Step:   4,
+			}`,
+		},
+		{
+			input: &hotstuff.MsgInfo{
+				Type:   hotstuff.MsgType_PROPOSAL, // zero-value will not be printed
+				Height: 1,
+				Round:  2,
+				Step:   4,
+			},
+			want: `&hotstuff.MsgInfo{
+				Height: 1,
+				Round:  2,
+				Step:   4,
+			}`,
+		},
 	}
 
 	for _, testCase := range testCases {
