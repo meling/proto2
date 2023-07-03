@@ -1,6 +1,6 @@
 # Protobuf to Go struct literal conversion
 
-The `proto2` package provides a single function `GoString()` that returns a Go string literal representation of a protobuf message.
+The `proto2` package provides a single function `GoStruct()` that returns a Go struct literal representation of a protobuf message.
 This can be handy if you want to generate Go code from a protobuf message.
 
 ## Example
@@ -17,7 +17,7 @@ msg := &hotstuff.Proposal{
  },
  AggQC: &hotstuff.AggQC{},
 }
-fmt.Println(proto2.GoString(msg))
+fmt.Println(proto2.GoStruct(msg))
 ```
 
 This produces the following output:
