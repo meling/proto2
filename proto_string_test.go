@@ -10,7 +10,7 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-func TestGoString(t *testing.T) {
+func TestGoStruct(t *testing.T) {
 	testCases := []struct {
 		input proto.Message
 		want  string
@@ -121,17 +121,65 @@ func TestGoString(t *testing.T) {
 				},
 			}`,
 		},
+		{
+			input: &hotstuff.Proposal{
+				Block: &hotstuff.Block{
+					Parent:   []byte{136, 111, 248, 42, 223, 172},
+					Command:  []byte{136, 111, 248, 42, 223, 172},
+					View:     3877690086,
+					Proposer: 21312,
+					QC: &hotstuff.QuorumCert{
+						Sig: &hotstuff.QuorumSignature{
+							Sig: nil,
+						},
+						Hash: []byte{136, 111, 248, 42, 223, 172},
+					},
+				},
+				AggQC: &hotstuff.AggQC{
+					QCs: map[uint32]*hotstuff.QuorumCert{
+						3877690086: {
+							Sig: &hotstuff.QuorumSignature{
+								Sig: nil,
+							},
+							Hash: []byte{136, 111, 248, 42, 223, 172},
+							View: 3877690086,
+						},
+					},
+				},
+			},
+			want: `&hotstuff.Proposal{
+				Block: &hotstuff.Block{
+					Parent:   []byte{136, 111, 248, 42, 223, 172},
+					QC: &hotstuff.QuorumCert{
+						Sig: &hotstuff.QuorumSignature{},
+						Hash: []byte{136, 111, 248, 42, 223, 172},
+					},
+					View:     3877690086,
+					Command:  []byte{136, 111, 248, 42, 223, 172},
+					Proposer: 21312,
+				},
+				AggQC: &hotstuff.AggQC{
+					QCs: map[uint32]*hotstuff.QuorumCert{
+						3877690086: {
+							Sig: &hotstuff.QuorumSignature{},
+							View: 3877690086,
+							Hash: []byte{136, 111, 248, 42, 223, 172},
+						},
+					},
+				},
+			}`,
+		},
 	}
 
 	for _, testCase := range testCases {
-		got := proto2.GoString(testCase.input)
+		got := proto2.GoStruct(testCase.input)
 		formatted, err := format.Source([]byte(testCase.want))
 		if err != nil {
 			t.Fatal(err)
 		}
 		want := string(formatted) + "\n"
 		if diff := cmp.Diff(want, got); diff != "" {
-			t.Errorf("proto2.GoString() mismatch (-want, +got):\n%s", diff)
+			t.Errorf("proto2.GoStruct() mismatch (-want, +got):\n%s", diff)
 		}
 	}
 }

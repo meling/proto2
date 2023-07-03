@@ -11,8 +11,8 @@ import (
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
 
-// GoString returns a Go struct literal for the given proto.Message.
-func GoString(m proto.Message) string {
+// GoStruct returns a Go struct literal for the given proto.Message.
+func GoStruct(m proto.Message) string {
 	if m == nil {
 		return ""
 	}
@@ -57,11 +57,11 @@ func GoString(m proto.Message) string {
 			nestedFields.push()
 
 		case protoreflect.List:
-			builder.WriteString(fmt.Sprintf("[]%s{\n", getGoTypeName(fd)))
+			builder.WriteString(fmt.Sprintf("[]%s{\n", goTypeName(fd)))
 			nestedFields.push()
 
 		case protoreflect.Map:
-			builder.WriteString(fmt.Sprintf("map[%s]%s{\n", fd.MapKey().Kind(), getGoTypeName(fd.MapValue())))
+			builder.WriteString(fmt.Sprintf("map[%s]%s{\n", fd.MapKey().Kind(), goTypeName(fd.MapValue())))
 			nestedFields.push()
 
 		case []byte:
@@ -124,8 +124,8 @@ func bytesToStringList(v []byte) string {
 	return strings.Join(byteAsDecString, ", ")
 }
 
-// getGoTypeName returns the name of the Go type for the given field descriptor.
-func getGoTypeName(fd protoreflect.FieldDescriptor) string {
+// goTypeName returns the Go type name for the given field descriptor.
+func goTypeName(fd protoreflect.FieldDescriptor) string {
 	kind := fd.Kind()
 	typeName := kind.String()
 	if kind == protoreflect.MessageKind {
